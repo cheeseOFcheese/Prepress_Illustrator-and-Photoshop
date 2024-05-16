@@ -1,4 +1,4 @@
-# prepress_help_Illustrator
+s# prepress_help_Illustrator
 
 это мой набор супер инструментов, сюда я гружу скрипты для препресса и работы в Illustrator, который разрабатываю в процессе своих проектов.
 чтобы скачать, перейти по ссылке "скачать" и нажать на эту кнопку 
@@ -16,4 +16,7 @@
 
 ## Этот скрипт позволяет настраивать параметры текста для артбордов в Adobe Illustrator.
 Вы можете выбрать шрифт, размер шрифта, позицию текста на артборде и использовать имя файла или ввести свое имя для текста. Дополнительно можно добавить стрелки к тексту.
-![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/image.png)
+##пример работы со скриптом:
+![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se0.png)
+![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se1.png)
+![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se2.png)
