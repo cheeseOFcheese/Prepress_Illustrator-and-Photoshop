@@ -7,6 +7,23 @@ var doc = app.activeDocument;
 var artboardIndex = 0; // Индекс выбранного артборда по умолчанию
 var textItems = []; // Список для хранения текстовых объектов
 
+// Создаем выпадающий список для выбора шрифта
+var fontGroup = dialog.add('group');
+fontGroup.add('statictext', undefined, 'Выберите шрифт:');
+var fontDropdown = fontGroup.add('dropdownlist');
+var fonts = app.textFonts; // Получаем доступные шрифты
+var defaultFontIndex = 0; // Индекс шрифта Impact по умолчанию
+
+// Заполняем выпадающий список именами шрифтов
+for (var k = 0; k < fonts.length; k++) {
+    var fontItem = fontDropdown.add('item', fonts[k].name);
+    fontItem.font = fonts[k];
+    if (fonts[k].name === "Impact") {
+        defaultFontIndex = k; // Запоминаем позицию шрифта Impact
+    }
+}
+fontDropdown.selection = defaultFontIndex; // Выбираем шрифт Impact по умолчанию
+
 // Добавляем выпадающий список артбордов, только если их больше одного
 if (doc.artboards.length > 1) {
     var artboardGroup = dialog.add('group');
@@ -50,22 +67,18 @@ okButton.onClick = function() {
     // Установка активного артборда
     doc.artboards.setActiveArtboardIndex(artboardIndex);
 
-    // Получаем активный артборд
-    var activeArtboard = doc.artboards[artboardIndex];
-    var artboardBounds = activeArtboard.artboardRect; // Границы артборда
-
     // Обрабатываем каждый выбранный чекбокс
     if (topLeftCheckbox.value) {
-        textItems.push(createTextAtCorner('topLeft', fontSizePt, artboardBounds));
+        textItems.push(createTextAtCorner('topLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect));
     }
     if (bottomLeftCheckbox.value) {
-        textItems.push(createTextAtCorner('bottomLeft', fontSizePt, artboardBounds));
+        textItems.push(createTextAtCorner('bottomLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect));
     }
     if (topRightCheckbox.value) {
-        textItems.push(createTextAtCorner('topRight', fontSizePt, artboardBounds));
+        textItems.push(createTextAtCorner('topRight', fontSizePt, doc.artboards[artboardIndex].artboardRect));
     }
     if (bottomRightCheckbox.value) {
-        textItems.push(createTextAtCorner('bottomRight', fontSizePt, artboardBounds));
+        textItems.push(createTextAtCorner('bottomRight', fontSizePt, doc.artboards[artboardIndex].artboardRect));
     }
 
     // Создаем группу и добавляем все текстовые объекты в нее
@@ -87,7 +100,7 @@ dialog.show();
 // Функция для создания и перемещения текста
 function createTextAtCorner(corner, fontSizePt, bounds) {
     var text = doc.textFrames.add();
-    text.textRange.characterAttributes.textFont = app.textFonts.getByName("Impact"); // Установка шрифта "Impact"
+    text.textRange.characterAttributes.textFont = fontDropdown.selection.font; // Установка выбранного шрифта
     var arrow = arrowCheckbox.value ? " ↑ " : "";
     switch (corner) {
         case 'topLeft':
