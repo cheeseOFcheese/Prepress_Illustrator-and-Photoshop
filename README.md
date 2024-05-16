@@ -14,8 +14,8 @@
 Вы можете выбрать шрифт, размер шрифта, позицию текста на артборде и использовать имя файла или ввести свое имя для текста. Дополнительно можно добавить стрелки к тексту.
 
 
-https://github.com/cheeseOFcheese/prepress_help/blob/main/image/image.png
--
+![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/image.png)
+ -
 # prepress_help
 
 ## Storing Scripts for Quick Access:
