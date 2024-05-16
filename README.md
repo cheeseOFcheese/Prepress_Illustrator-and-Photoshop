@@ -24,7 +24,7 @@
 
 # <a id="title2">скрипт 1: text in corners + arrows.jsx:</a>  
 
-## Скачать: https://github.com/cheeseOFcheese/prepress_help/blob/main/text%20in%20corners%20%2B%20arrows.jsx 
+> Скачать: https://github.com/cheeseOFcheese/prepress_help/blob/main/text%20in%20corners%20%2B%20arrows.jsx 
 > Этот скрипт позволяет настраивать параметры текста для артбордов в Adobe Illustrator.
 Вы можете выбрать шрифт, размер шрифта, позицию текста на артборде и использовать имя файла или ввести свое имя для текста. Дополнительно можно добавить стрелки к тексту.
 #### пример работы со скриптом text in corners + arrows.jsx:
