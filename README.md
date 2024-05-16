@@ -42,7 +42,9 @@
 
 # <a id="title2">скрипт 2:lines_steps_and_crosses.jsx:</a> 
 > Скачать: [https://github.com/cheeseOFcheese/prepress_help/blob/main/text%20in%20corners%20%2B%20arrows.jsx ](https://github.com/cheeseOFcheese/Prepress-help_Illustrator-Photoshop/blob/main/lines_steps_and_crosses.jsx) 
-
-> 
-Этот скрипт для Adobe Illustrator автоматизирует процесс создания линий разметки и крестиков на выбранном артборде. 
+> Этот скрипт для Adobe Illustrator автоматизирует процесс создания линий разметки и крестиков на выбранном артборде. 
 Пользователь может настроить отступы и выбрать добавление крестиков на пересечении линий.
+##### заполняем поле
+![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/s2-1.png)
+##### всё расставлено
+![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/s2-2.png)
