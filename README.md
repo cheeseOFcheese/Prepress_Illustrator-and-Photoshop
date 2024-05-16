@@ -1,5 +1,4 @@
-# prepress_help_Illustrator/Photoshop
-
+# набор созданных мной скриптов для предпечатной подготовки
 это мой набор супер инструментов, сюда я гружу скрипты для препресса и работы в Illustrator, который разрабатываю в процессе своих проектов.
 чтобы скачать, перейти по ссылке "скачать" и нажать на эту кнопку 
 ![Prepress Image2](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/2.png) 
