@@ -22,3 +22,5 @@
 ![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se2.png)
 ##### если приблизить
 ![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se1.png)
+##### если у Вас нексолько артбордов, то появляется возможность выбрать тот что Вам нужно =)
+![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se3.png)
