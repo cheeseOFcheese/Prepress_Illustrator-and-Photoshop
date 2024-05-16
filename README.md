@@ -12,14 +12,15 @@
 
 ------------------------------------------------------------------
 # <a id="title1">Хранение скриптов для быстрого доступа:</a>
-
-чтобы скачать, перейти по ссылке "скачать" и нажать на эту кнопку 
-![Prepress Image2](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/2.png)  
-
 > Вы можете хранить скрипты в папке скриптов по умолчанию в Illustrator для быстрого доступа.
 На Windows поместите скрипт в C:\Program Files\Adobe\Adobe Illustrator <версия>\Presets\Scripts.
 На macOS поместите скрипт в /Applications/Adobe Illustrator <версия>/Presets/Scripts.
 После размещения скрипта в папке по умолчанию он будет отображаться непосредственно в меню Файл > Скрипты для легкого доступа.
+
+>чтобы скачать, перейти по ссылке "скачать" и нажать на эту кнопку 
+![Prepress Image2](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/2.png)  
+
+
 
 # <a id="title2">скрипт 1: text in corners + arrows.jsx:</a>  
 
