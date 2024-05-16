@@ -7,9 +7,10 @@
 
 [скрипт1 :text in corners + arrows.jsx](#title2)
 скрипт для расстановки стрелок и названия файла (или любого слова) в края артборда.
-![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se0.png)
+!
 
-====
+
+===========
 # <a id="title1">Хранение скриптов для быстрого доступа:</a>
 
 чтобы скачать, перейти по ссылке "скачать" и нажать на эту кнопку 
