@@ -7,6 +7,20 @@ var doc = app.activeDocument;
 var artboardIndex = 0; // Индекс выбранного артборда по умолчанию
 var textItems = []; // Список для хранения текстовых объектов
 
+// Чекбокс и поле для ввода имени
+var nameGroup = dialog.add('group');
+var useFileNameCheckbox = nameGroup.add('checkbox', undefined, 'Использовать имя файла');
+useFileNameCheckbox.value = true; // По умолчанию использовать имя файла
+var nameInput = nameGroup.add('edittext', undefined, doc.name);
+nameInput.enabled = false;
+
+useFileNameCheckbox.onClick = function() {
+    nameInput.enabled = !this.value;
+    if (this.value) {
+        nameInput.text = doc.name;
+    }
+};
+
 // Создаем выпадающий список для выбора шрифта
 var fontGroup = dialog.add('group');
 fontGroup.add('statictext', undefined, 'Выберите шрифт:');
@@ -63,22 +77,23 @@ var cancelButton = buttonGroup.add('button', undefined, 'Отмена');
 okButton.onClick = function() {
     var fontSizeMm = parseFloat(sizeInput.text);
     var fontSizePt = fontSizeMm * 2.83465; // Конвертация мм в пункты
+    var name = useFileNameCheckbox.value ? doc.name : nameInput.text; // Используем имя файла или введенное имя
 
     // Установка активного артборда
     doc.artboards.setActiveArtboardIndex(artboardIndex);
 
     // Обрабатываем каждый выбранный чекбокс
     if (topLeftCheckbox.value) {
-        textItems.push(createTextAtCorner('topLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect));
+        textItems.push(createTextAtCorner('topLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect, name));
     }
     if (bottomLeftCheckbox.value) {
-        textItems.push(createTextAtCorner('bottomLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect));
+        textItems.push(createTextAtCorner('bottomLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect, name));
     }
     if (topRightCheckbox.value) {
-        textItems.push(createTextAtCorner('topRight', fontSizePt, doc.artboards[artboardIndex].artboardRect));
+        textItems.push(createTextAtCorner('topRight', fontSizePt, doc.artboards[artboardIndex].artboardRect, name));
     }
     if (bottomRightCheckbox.value) {
-        textItems.push(createTextAtCorner('bottomRight', fontSizePt, doc.artboards[artboardIndex].artboardRect));
+        textItems.push(createTextAtCorner('bottomRight', fontSizePt, doc.artboards[artboardIndex].artboardRect, name));
     }
 
     // Создаем группу и добавляем все текстовые объекты в нее
@@ -98,28 +113,28 @@ cancelButton.onClick = function() {
 dialog.show();
 
 // Функция для создания и перемещения текста
-function createTextAtCorner(corner, fontSizePt, bounds) {
+function createTextAtCorner(corner, fontSizePt, bounds, name) {
     var text = doc.textFrames.add();
     text.textRange.characterAttributes.textFont = fontDropdown.selection.font; // Установка выбранного шрифта
     var arrow = arrowCheckbox.value ? " ↑ " : "";
     switch (corner) {
         case 'topLeft':
-            text.contents = arrow + "   " + doc.name; // Добавляем стрелку перед текстом
+            text.contents = arrow + "   " + name; // Добавляем стрелку перед текстом
             text.left = bounds[0];
             text.top = bounds[1] - text.height;
             break;
         case 'bottomLeft':
-            text.contents = arrow + "   " + doc.name; // Добавляем стрелку перед текстом
+            text.contents = arrow + "   " + name; // Добавляем стрелку перед текстом
             text.left = bounds[0];
             text.top = bounds[3];
             break;
         case 'topRight':
-            text.contents = doc.name + "   " + arrow; // Добавляем стрелку после текста
+            text.contents = name + "   " + arrow; // Добавляем стрелку после текста
             text.left = bounds[2] - text.width;
             text.top = bounds[1] - text.height;
             break;
         case 'bottomRight':
-            text.contents = doc.name + "   " + arrow; // Добавляем стрелку после текста
+            text.contents = name + "   " + arrow; // Добавляем стрелку после текста
             text.left = bounds[2] - text.width;
             text.top = bounds[3];
             break;
