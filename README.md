@@ -11,6 +11,7 @@
 На macOS поместите скрипт в /Applications/Adobe Illustrator <версия>/Presets/Scripts.
 После размещения скрипта в папке по умолчанию он будет отображаться непосредственно в меню Файл > Скрипты для легкого доступа.
 
+# скрипт 1 
 # text in corners + arrows.jsx  
 ## Скачать: https://github.com/cheeseOFcheese/prepress_help/blob/main/text%20in%20corners%20%2B%20arrows.jsx 
 ### Этот скрипт позволяет настраивать параметры текста для артбордов в Adobe Illustrator.
