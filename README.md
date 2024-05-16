@@ -18,5 +18,7 @@ s# prepress_help_Illustrator
 Вы можете выбрать шрифт, размер шрифта, позицию текста на артборде и использовать имя файла или ввести свое имя для текста. Дополнительно можно добавить стрелки к тексту.
 ##пример работы со скриптом:
 ![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se0.png)
+_
 ![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se1.png)
+_
 ![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se2.png)
