@@ -89,25 +89,22 @@ okButton.onClick = function() {
     // Установка активного артборда
     doc.artboards.setActiveArtboardIndex(artboardIndex);
 
+    // Создаем новый слой
+    var layer = doc.layers.add();
+    layer.name = "Text and Arrows Layer";
+
     // Обрабатываем каждый выбранный чекбокс
     if (topLeftCheckbox.value) {
-        textItems.push(createTextAtCorner('topLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect, name));
+        textItems.push(createTextAtCorner('topLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer));
     }
     if (bottomLeftCheckbox.value) {
-        textItems.push(createTextAtCorner('bottomLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect, name));
+        textItems.push(createTextAtCorner('bottomLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer));
     }
     if (topRightCheckbox.value) {
-        textItems.push(createTextAtCorner('topRight', fontSizePt, doc.artboards[artboardIndex].artboardRect, name));
+        textItems.push(createTextAtCorner('topRight', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer));
     }
     if (bottomRightCheckbox.value) {
-        textItems.push(createTextAtCorner('bottomRight', fontSizePt, doc.artboards[artboardIndex].artboardRect, name));
-    }
-
-    // Создаем группу и добавляем все текстовые объекты в нее
-    var group = doc.groupItems.add();
-    group.name = "text_and_arrows";
-    for (var j = 0; j < textItems.length; j++) {
-        textItems[j].move(group, ElementPlacement.INSIDE);
+        textItems.push(createTextAtCorner('bottomRight', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer));
     }
 
     dialog.close();
@@ -120,7 +117,7 @@ cancelButton.onClick = function() {
 dialog.show();
 
 // Функция для создания и перемещения текста
-function createTextAtCorner(corner, fontSizePt, bounds, name) {
+function createTextAtCorner(corner, fontSizePt, bounds, name, layer) {
     var text = doc.textFrames.add();
     text.textRange.characterAttributes.textFont = fontDropdown.selection.font; // Установка выбранного шрифта
     var arrow = arrowCheckbox.value ? " ↑ " : "";
@@ -150,5 +147,8 @@ function createTextAtCorner(corner, fontSizePt, bounds, name) {
     // Перемещаем текст на высоту самого текста вверх
     text.top += text.height;
 
-    return text; // Возвращаем текстовый объект для добавления в группу
+    // Перемещаем текстовый объект на новый слой
+    text.move(layer, ElementPlacement.PLACEATEND);
+
+    return text; // Возвращаем текстовый объект для добавления в список
 }
