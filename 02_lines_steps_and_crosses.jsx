@@ -1,10 +1,11 @@
 var doc = app.activeDocument;
 
-// Окно для выбора артборда
-var dialog = new Window('dialog', 'Настройка линий');
+// Окно для настройки параметров
+var dialog = new Window('dialog', 'Настройка линий и крестиков');
 dialog.orientation = 'column';
 dialog.alignChildren = 'left';
 
+// Выбор артборда
 var artboardGroup = dialog.add('group');
 artboardGroup.add('statictext', undefined, 'Выберите артборд:');
 var artboardDropdown = artboardGroup.add('dropdownlist');
@@ -13,11 +14,13 @@ for (var i = 0; i < doc.artboards.length; i++) {
 }
 artboardDropdown.selection = 0; // По умолчанию выбираем первый артборд
 
+// Ввод отступов
 var paddingGroup = dialog.add('group');
 paddingGroup.add('statictext', undefined, 'Введите отступы (в мм):');
 var paddingInput = paddingGroup.add('edittext', undefined, '100');
 paddingInput.characters = 5;
 
+// Индивидуальный отступ
 var customPaddingCheckbox = dialog.add('checkbox', undefined, 'Индивидуальный отступ');
 
 var customPaddingGroup = dialog.add('group');
@@ -50,9 +53,29 @@ customPaddingCheckbox.onClick = function() {
     paddingGroup.enabled = !this.value;
 };
 
+// Настройка толщины линии
+var lineWeightGroup = dialog.add('group');
+lineWeightGroup.add('statictext', undefined, 'Толщина линии (в мм):');
+var lineWeightInput = lineWeightGroup.add('edittext', undefined, '2');
+lineWeightInput.characters = 5;
+
+// Настройка размера крестиков
+var crossSizeGroup = dialog.add('group');
+crossSizeGroup.add('statictext', undefined, 'Размер крестиков (в мм):');
+var crossSizeInput = crossSizeGroup.add('edittext', undefined, '10');
+crossSizeInput.characters = 5;
+
+// Настройка толщины линий крестиков
+var crossLineWeightGroup = dialog.add('group');
+crossLineWeightGroup.add('statictext', undefined, 'Толщина линий крестиков (в мм):');
+var crossLineWeightInput = crossLineWeightGroup.add('edittext', undefined, '2');
+crossLineWeightInput.characters = 5;
+
+// Добавление крестиков на пересечении
 var crossCheckbox = dialog.add('checkbox', undefined, 'Добавить крестики на пересечении');
 crossCheckbox.value = true; // Включаем крестики по умолчанию
 
+// Кнопки OK и Отмена
 var buttonGroup = dialog.add('group');
 var okButton = buttonGroup.add('button', undefined, 'OK');
 var cancelButton = buttonGroup.add('button', undefined, 'Отмена');
@@ -66,7 +89,10 @@ okButton.onClick = function() {
     var leftPadding = parseFloat(leftPaddingInput.text) || 0;
     var rightPadding = parseFloat(rightPaddingInput.text) || 0;
     var addCross = crossCheckbox.value;
-    addLayoutLines(selectedArtboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross);
+    var lineWeight = parseFloat(lineWeightInput.text) || 2;
+    var crossSize = parseFloat(crossSizeInput.text) || 10;
+    var crossLineWeight = parseFloat(crossLineWeightInput.text) || 2;
+    addLayoutLines(selectedArtboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight);
     dialog.close();
 };
 
@@ -76,7 +102,7 @@ cancelButton.onClick = function() {
 
 dialog.show();
 
-function addLayoutLines(artboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross) {
+function addLayoutLines(artboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight) {
     var doc = app.activeDocument;
     doc.artboards.setActiveArtboardIndex(artboardIndex);
     var ab = doc.artboards[artboardIndex];
@@ -89,7 +115,7 @@ function addLayoutLines(artboardIndex, padding, customPadding, topPadding, botto
     crossLayer.name = "Crosses";
 
     // Толщина линий в мм, переведенная в пиксели (1 мм = 2.83465 пикселя)
-    var strokeWeight = 2 * 2.83465;
+    var strokeWeight = lineWeight * 2.83465;
 
     if (customPadding) {
         // Используем индивидуальные отступы
@@ -100,7 +126,7 @@ function addLayoutLines(artboardIndex, padding, customPadding, topPadding, botto
 
         if (addCross) {
             // Добавляем крестики на пересечениях
-            addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPadding, crossLayer);
+            addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPadding, crossLayer, crossSize, crossLineWeight);
         }
     } else {
         // Используем одинаковые отступы для всех сторон
@@ -111,16 +137,16 @@ function addLayoutLines(artboardIndex, padding, customPadding, topPadding, botto
 
         if (addCross) {
             // Добавляем крестики на пересечениях
-            addCrosses(abBounds, padding, padding, padding, padding, crossLayer);
+            addCrosses(abBounds, padding, padding, padding, padding, crossLayer, crossSize, crossLineWeight);
         }
     }
 }
 
-function addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPadding, layer) {
-    createCross(abBounds[0] + mmToPt(leftPadding), abBounds[1] - mmToPt(topPadding), layer);
-    createCross(abBounds[0] + mmToPt(leftPadding), abBounds[3] + mmToPt(bottomPadding), layer);
-    createCross(abBounds[2] - mmToPt(rightPadding), abBounds[1] - mmToPt(topPadding), layer);
-    createCross(abBounds[2] - mmToPt(rightPadding), abBounds[3] + mmToPt(bottomPadding), layer);
+function addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPadding, layer, crossSize, crossLineWeight) {
+    createCross(abBounds[0] + mmToPt(leftPadding), abBounds[1] - mmToPt(topPadding), layer, crossSize, crossLineWeight);
+    createCross(abBounds[0] + mmToPt(leftPadding), abBounds[3] + mmToPt(bottomPadding), layer, crossSize, crossLineWeight);
+    createCross(abBounds[2] - mmToPt(rightPadding), abBounds[1] - mmToPt(topPadding), layer, crossSize, crossLineWeight);
+    createCross(abBounds[2] - mmToPt(rightPadding), abBounds[3] + mmToPt(bottomPadding), layer, crossSize, crossLineWeight);
 }
 
 function createLine(start, end, strokeWeight, layer, color) {
@@ -143,19 +169,19 @@ function createLine(start, end, strokeWeight, layer, color) {
     pathItem.filled = false;
 }
 
-function createCross(x, y, layer) {
+function createCross(x, y, layer, crossSize, crossLineWeight) {
     // Размер крестика (половина размера одного сегмента в мм, переводим в пиксели)
-    var crossSize = 10 * 2.83465;
-    var strokeWeight = 2 * 2.83465; // Толщина линии крестика в мм
+    var crossSizePt = crossSize * 2.83465;
+    var strokeWeight = crossLineWeight * 2.83465; // Толщина линии крестика в мм
 
     // Создаем группу для крестика
     var group = layer.groupItems.add();
 
     // Создаем горизонтальную линию крестика
-    createLine([x - crossSize, y], [x + crossSize, y], strokeWeight, group, 'black');
+    createLine([x - crossSizePt, y], [x + crossSizePt, y], strokeWeight, group, 'black');
 
     // Создаем вертикальную линию крестика
-    createLine([x, y - crossSize], [x, y + crossSize], strokeWeight, group, 'black');
+    createLine([x, y - crossSizePt], [x, y + crossSizePt], strokeWeight, group, 'black');
 }
 
 function mmToPt(mm) {
