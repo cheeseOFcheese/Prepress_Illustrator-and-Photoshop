@@ -26,7 +26,7 @@
 
 # <a id="title1">скрипт 1: text in corners + arrows.jsx:</a>  
 
-> Скачать: https://github.com/cheeseOFcheese/prepress_help/blob/main/text%20in%20corners%20%2B%20arrows.jsx 
+> Скачать: [https://github.com/cheeseOFcheese/prepress_help/blob/main/text%20in%20corners%20%2B%20arrows.jsx ](https://github.com/cheeseOFcheese/Prepress-help_Illustrator-Photoshop/blob/main/01_text%20in%20corners%2Barrows.jsx) 
 > Этот скрипт позволяет настраивать параметры текста для артбордов в Adobe Illustrator.
 Вы можете выбрать шрифт, размер шрифта, позицию текста на артборде и использовать имя файла или ввести свое имя для текста. Дополнительно можно добавить стрелки к тексту.
 #### пример работы со скриптом text in corners + arrows.jsx:
@@ -41,7 +41,7 @@
 
 
 # <a id="title2">скрипт 2:lines_steps_and_crosses.jsx:</a> 
-> Скачать: [https://github.com/cheeseOFcheese/prepress_help/blob/main/text%20in%20corners%20%2B%20arrows.jsx ](https://github.com/cheeseOFcheese/Prepress-help_Illustrator-Photoshop/blob/main/lines_steps_and_crosses.jsx) 
+> Скачать:[ https://github.com/cheeseOFcheese/Prepress-help_Illustrator-Photoshop/blob/main/02_lines_steps_and_crosses.jsx](https://github.com/cheeseOFcheese/Prepress-help_Illustrator-Photoshop/blob/main/02_lines_steps_and_crosses.jsx) 
 > Этот скрипт для Adobe Illustrator автоматизирует процесс создания линий разметки и крестиков на выбранном артборде. 
 Пользователь может настроить отступы и выбрать добавление крестиков на пересечении линий.
 ##### заполняем поле
