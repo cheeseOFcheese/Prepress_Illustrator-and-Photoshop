@@ -55,6 +55,7 @@ if (doc.artboards.length > 1) {
 
 // Чекбокс для добавления стрелок
 var arrowCheckbox = dialog.add('checkbox', undefined, 'Добавить стрелки');
+arrowCheckbox.value = true; // Включен по умолчанию
 
 // Создаем группу чекбоксов для выбора сторон
 var sidesGroup = dialog.add('panel', undefined, 'Выберите позиции для текста:');
@@ -65,9 +66,15 @@ var bottomLeftCheckbox = sidesGroup.add('checkbox', undefined, 'Лево Низ'
 var topRightCheckbox = sidesGroup.add('checkbox', undefined, 'Право Верх');
 var bottomRightCheckbox = sidesGroup.add('checkbox', undefined, 'Право Низ');
 
+// Устанавливаем все чекбоксы по умолчанию включенными
+topLeftCheckbox.value = true;
+bottomLeftCheckbox.value = true;
+topRightCheckbox.value = true;
+bottomRightCheckbox.value = true;
+
 var sizeGroup = dialog.add('group');
-sizeGroup.add('statictext', undefined, 'Введите размер шрифта (в миллиметрах):');
-var sizeInput = sizeGroup.add('edittext', undefined, '4.23'); // Примерный размер в мм
+sizeGroup.add('statictext', undefined, 'Введите размер шрифта (в миллиметрах, минимум 4 мм):');
+var sizeInput = sizeGroup.add('edittext', undefined, '4.00'); // Примерный размер в мм
 sizeInput.characters = 5;
 
 var buttonGroup = dialog.add('group');
@@ -75,7 +82,7 @@ var okButton = buttonGroup.add('button', undefined, 'OK');
 var cancelButton = buttonGroup.add('button', undefined, 'Отмена');
 
 okButton.onClick = function() {
-    var fontSizeMm = parseFloat(sizeInput.text);
+    var fontSizeMm = Math.max(parseFloat(sizeInput.text), 4.00); // Устанавливаем минимальный размер 4 мм
     var fontSizePt = fontSizeMm * 2.83465; // Конвертация мм в пункты
     var name = useFileNameCheckbox.value ? doc.name : nameInput.text; // Используем имя файла или введенное имя
 
@@ -98,7 +105,7 @@ okButton.onClick = function() {
 
     // Создаем группу и добавляем все текстовые объекты в нее
     var group = doc.groupItems.add();
-    group.name = "text_artboard";
+    group.name = "text_and_arrows";
     for (var j = 0; j < textItems.length; j++) {
         textItems[j].move(group, ElementPlacement.INSIDE);
     }
