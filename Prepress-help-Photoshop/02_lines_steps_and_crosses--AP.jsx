@@ -148,25 +148,42 @@ function addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPaddi
 }
 
 function createLine(start, end, strokeWeight, layer) {
-    var linePath = doc.pathItems.add("Line", [start, end]);
-    linePath.stroked = true;
-    linePath.strokeWidth = strokeWeight;
-
-    var strokeColor = new SolidColor();
-    strokeColor.rgb.red = 128;
-    strokeColor.rgb.green = 128;
-    strokeColor.rgb.blue = 128;
-    linePath.strokeColor = strokeColor;
+    var idLine = stringIDToTypeID("line");
+    var desc = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref = new ActionReference();
+    ref.putClass(idLine);
+    desc.putReference(idnull, ref);
+    var idFrom = charIDToTypeID("From");
+    var desc2 = new ActionDescriptor();
+    desc2.putUnitDouble(charIDToTypeID("Hrzn"), charIDToTypeID("#Pxl"), start[0]);
+    desc2.putUnitDouble(charIDToTypeID("Vrtc"), charIDToTypeID("#Pxl"), start[1]);
+    desc.putObject(idFrom, charIDToTypeID("Pnt "), desc2);
+    var idTo = charIDToTypeID("T   ");
+    var desc3 = new ActionDescriptor();
+    desc3.putUnitDouble(charIDToTypeID("Hrzn"), charIDToTypeID("#Pxl"), end[0]);
+    desc3.putUnitDouble(charIDToTypeID("Vrtc"), charIDToTypeID("#Pxl"), end[1]);
+    desc.putObject(idTo, charIDToTypeID("Pnt "), desc3);
+    var idstrokeWeight = stringIDToTypeID("strokeWidth");
+    desc.putUnitDouble(idstrokeWeight, charIDToTypeID("#Pxl"), strokeWeight);
+    var idstrokeColor = stringIDToTypeID("strokeColor");
+    var desc4 = new ActionDescriptor();
+    desc4.putDouble(charIDToTypeID("Rd  "), 0.0);
+    desc4.putDouble(charIDToTypeID("Grn "), 0.0);
+    desc4.putDouble(charIDToTypeID("Bl  "), 0.0);
+    desc.putObject(idstrokeColor, charIDToTypeID("RGBC"), desc4);
+    executeAction(idLine, desc, DialogModes.NO);
 }
 
 function createCross(x, y, layer, crossSize, crossLineWeight) {
-    var crossSizePt = crossSize * 2.83465;
-    var strokeWeight = crossLineWeight * 2.83465;
+    var crossSizePx = mmToPx(crossSize);
+    var strokeWeight = mmToPx(crossLineWeight);
 
-    var group = layer.layerSets.add();
+    // Горизонтальная линия
+    createLine([x - crossSizePx / 2, y], [x + crossSizePx / 2, y], strokeWeight, layer);
 
-    createLine([x - crossSizePt, y], [x + crossSizePt, y], strokeWeight, group);
-    createLine([x, y - crossSizePt], [x, y + crossSizePt], strokeWeight, group);
+    // Вертикальная линия
+    createLine([x, y - crossSizePx / 2], [x, y + crossSizePx / 2], strokeWeight, layer);
 }
 
 function mmToPx(mm) {
