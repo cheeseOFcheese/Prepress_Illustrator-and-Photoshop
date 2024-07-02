@@ -71,6 +71,12 @@ crossLineWeightGroup.add('statictext', undefined, 'Толщина линий к�
 var crossLineWeightInput = crossLineWeightGroup.add('edittext', undefined, '2');
 crossLineWeightInput.characters = 5;
 
+// Настройка прозрачности
+var opacityGroup = dialog.add('group');
+opacityGroup.add('statictext', undefined, 'Введите прозрачность (в процентах, минимум 0%, максимум 100%):');
+var opacityInput = opacityGroup.add('edittext', undefined, '25'); // Примерная прозрачность в процентах
+opacityInput.characters = 3;
+
 // Добавление крестиков на пересечении
 var crossCheckbox = dialog.add('checkbox', undefined, 'Добавить крестики на пересечении');
 crossCheckbox.value = true; // Включаем крестики по умолчанию
@@ -92,7 +98,8 @@ okButton.onClick = function() {
     var lineWeight = parseFloat(lineWeightInput.text) || 2;
     var crossSize = parseFloat(crossSizeInput.text) || 10;
     var crossLineWeight = parseFloat(crossLineWeightInput.text) || 2;
-    addLayoutLines(selectedArtboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight);
+    var opacity = Math.max(0, Math.min(parseFloat(opacityInput.text), 100)); // Устанавливаем прозрачность от 0% до 100%
+    addLayoutLines(selectedArtboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity);
     dialog.close();
 };
 
@@ -102,7 +109,7 @@ cancelButton.onClick = function() {
 
 dialog.show();
 
-function addLayoutLines(artboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight) {
+function addLayoutLines(artboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity) {
     var doc = app.activeDocument;
     doc.artboards.setActiveArtboardIndex(artboardIndex);
     var ab = doc.artboards[artboardIndex];
@@ -111,8 +118,11 @@ function addLayoutLines(artboardIndex, padding, customPadding, topPadding, botto
     // Создаем векторные линии
     var linesLayer = doc.layers.add();
     linesLayer.name = "LayoutLines";
+    linesLayer.opacity = opacity; // Устанавливаем прозрачность слоя линий
+
     var crossLayer = doc.layers.add();
     crossLayer.name = "Crosses";
+    crossLayer.opacity = opacity; // Устанавливаем прозрачность слоя крестиков
 
     // Толщина линий в мм, переведенная в пиксели (1 мм = 2.83465 пикселя)
     var strokeWeight = lineWeight * 2.83465;
