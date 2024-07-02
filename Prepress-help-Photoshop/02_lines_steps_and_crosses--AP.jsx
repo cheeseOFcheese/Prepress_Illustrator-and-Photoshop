@@ -7,6 +7,15 @@ var dialog = new Window('dialog', 'Настройка линий и крести
 dialog.orientation = 'column';
 dialog.alignChildren = 'left';
 
+// Выбор артборда
+var artboardGroup = dialog.add('group');
+artboardGroup.add('statictext', undefined, 'Выберите артборд:');
+var artboardDropdown = artboardGroup.add('dropdownlist');
+for (var i = 0; i < doc.artboards.length; i++) {
+    artboardDropdown.add('item', doc.artboards[i].name);
+}
+artboardDropdown.selection = 0; // По умолчанию выбираем первый артборд
+
 // Ввод отступов
 var paddingGroup = dialog.add('group');
 paddingGroup.add('statictext', undefined, 'Введите отступы (в мм):');
@@ -67,12 +76,12 @@ crossLineWeightInput.characters = 5;
 // Настройка прозрачности
 var opacityGroup = dialog.add('group');
 opacityGroup.add('statictext', undefined, 'Введите прозрачность (в процентах, минимум 0%, максимум 100%):');
-var opacityInput = opacityGroup.add('edittext', undefined, '25');
+var opacityInput = opacityGroup.add('edittext', undefined, '25'); // Примерная прозрачность в процентах
 opacityInput.characters = 3;
 
 // Добавление крестиков на пересечении
 var crossCheckbox = dialog.add('checkbox', undefined, 'Добавить крестики на пересечении');
-crossCheckbox.value = true;
+crossCheckbox.value = true; // Включаем крестики по умолчанию
 
 // Кнопки OK и Отмена
 var buttonGroup = dialog.add('group');
@@ -80,6 +89,7 @@ var okButton = buttonGroup.add('button', undefined, 'OK');
 var cancelButton = buttonGroup.add('button', undefined, 'Отмена');
 
 okButton.onClick = function() {
+    var selectedArtboardIndex = artboardDropdown.selection.index;
     var padding = parseFloat(paddingInput.text) || 0;
     var customPadding = customPaddingCheckbox.value;
     var topPadding = parseFloat(topPaddingInput.text) || 0;
@@ -90,8 +100,8 @@ okButton.onClick = function() {
     var lineWeight = parseFloat(lineWeightInput.text) || 2;
     var crossSize = parseFloat(crossSizeInput.text) || 10;
     var crossLineWeight = parseFloat(crossLineWeightInput.text) || 2;
-    var opacity = Math.max(0, Math.min(parseFloat(opacityInput.text), 100));
-    addLayoutLines(padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity);
+    var opacity = Math.max(0, Math.min(parseFloat(opacityInput.text), 100)); // Устанавливаем прозрачность от 0% до 100%
+    addLayoutLines(selectedArtboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity);
     dialog.close();
 };
 
@@ -101,40 +111,42 @@ cancelButton.onClick = function() {
 
 dialog.show();
 
-function addLayoutLines(padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity) {
+function addLayoutLines(artboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity) {
     var doc = app.activeDocument;
-    var abBounds = [0, 0, doc.width.value, doc.height.value];
+    doc.artboards.setActiveArtboardIndex(artboardIndex);
+    var ab = doc.artboards[artboardIndex];
+    var abBounds = ab.artboardRect; // [left, top, right, bottom]
 
-    // Создаем слои для линий и крестиков
+    // Создаем слой для линий
     var linesLayer = doc.artLayers.add();
     linesLayer.name = "LayoutLines";
-    linesLayer.opacity = opacity;
+    linesLayer.opacity = opacity; // Устанавливаем прозрачность слоя линий
 
+    // Создаем слой для крестиков
     var crossLayer = doc.artLayers.add();
     crossLayer.name = "Crosses";
-    crossLayer.opacity = opacity;
-
-    // Толщина линий в мм, переведенная в пиксели (1 мм = 2.83465 пикселя)
-    var strokeWeight = lineWeight * 2.83465;
+    crossLayer.opacity = opacity; // Устанавливаем прозрачность слоя крестиков
 
     if (customPadding) {
         // Используем индивидуальные отступы
-        createLine([abBounds[0] + mmToPx(leftPadding), abBounds[1]], [abBounds[0] + mmToPx(leftPadding), abBounds[3]], strokeWeight, linesLayer);
-        createLine([abBounds[2] - mmToPx(rightPadding), abBounds[1]], [abBounds[2] - mmToPx(rightPadding), abBounds[3]], strokeWeight, linesLayer);
-        createLine([abBounds[0], abBounds[1] - mmToPx(topPadding)], [abBounds[2], abBounds[1] - mmToPx(topPadding)], strokeWeight, linesLayer);
-        createLine([abBounds[0], abBounds[3] + mmToPx(bottomPadding)], [abBounds[2], abBounds[3] + mmToPx(bottomPadding)], strokeWeight, linesLayer);
+        createLine([abBounds[0] + mmToPx(leftPadding), abBounds[1]], [abBounds[0] + mmToPx(leftPadding), abBounds[3]], lineWeight, linesLayer);
+        createLine([abBounds[2] - mmToPx(rightPadding), abBounds[1]], [abBounds[2] - mmToPx(rightPadding), abBounds[3]], lineWeight, linesLayer);
+        createLine([abBounds[0], abBounds[1] - mmToPx(topPadding)], [abBounds[2], abBounds[1] - mmToPx(topPadding)], lineWeight, linesLayer);
+        createLine([abBounds[0], abBounds[3] + mmToPx(bottomPadding)], [abBounds[2], abBounds[3] + mmToPx(bottomPadding)], lineWeight, linesLayer);
 
         if (addCross) {
+            // Добавляем крестики на пересечениях
             addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPadding, crossLayer, crossSize, crossLineWeight);
         }
     } else {
         // Используем одинаковые отступы для всех сторон
-        createLine([abBounds[0] + mmToPx(padding), abBounds[1]], [abBounds[0] + mmToPx(padding), abBounds[3]], strokeWeight, linesLayer);
-        createLine([abBounds[2] - mmToPx(padding), abBounds[1]], [abBounds[2] - mmToPx(padding), abBounds[3]], strokeWeight, linesLayer);
-        createLine([abBounds[0], abBounds[1] - mmToPx(padding)], [abBounds[2], abBounds[1] - mmToPx(padding)], strokeWeight, linesLayer);
-        createLine([abBounds[0], abBounds[3] + mmToPx(padding)], [abBounds[2], abBounds[3] + mmToPx(padding)], strokeWeight, linesLayer);
+        createLine([abBounds[0] + mmToPx(padding), abBounds[1]], [abBounds[0] + mmToPx(padding), abBounds[3]], lineWeight, linesLayer);
+        createLine([abBounds[2] - mmToPx(padding), abBounds[1]], [abBounds[2] - mmToPx(padding), abBounds[3]], lineWeight, linesLayer);
+        createLine([abBounds[0], abBounds[1] - mmToPx(padding)], [abBounds[2], abBounds[1] - mmToPx(padding)], lineWeight, linesLayer);
+        createLine([abBounds[0], abBounds[3] + mmToPx(padding)], [abBounds[2], abBounds[3] + mmToPx(padding)], lineWeight, linesLayer);
 
         if (addCross) {
+            // Добавляем крестики на пересечениях
             addCrosses(abBounds, padding, padding, padding, padding, crossLayer, crossSize, crossLineWeight);
         }
     }
@@ -147,45 +159,27 @@ function addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPaddi
     createCross(abBounds[2] - mmToPx(rightPadding), abBounds[3] + mmToPx(bottomPadding), layer, crossSize, crossLineWeight);
 }
 
-function createLine(start, end, strokeWeight, layer) {
-    var idLine = stringIDToTypeID("line");
-    var desc = new ActionDescriptor();
-    var idnull = charIDToTypeID("null");
-    var ref = new ActionReference();
-    ref.putClass(idLine);
-    desc.putReference(idnull, ref);
-    var idFrom = charIDToTypeID("From");
-    var desc2 = new ActionDescriptor();
-    desc2.putUnitDouble(charIDToTypeID("Hrzn"), charIDToTypeID("#Pxl"), start[0]);
-    desc2.putUnitDouble(charIDToTypeID("Vrtc"), charIDToTypeID("#Pxl"), start[1]);
-    desc.putObject(idFrom, charIDToTypeID("Pnt "), desc2);
-    var idTo = charIDToTypeID("T   ");
-    var desc3 = new ActionDescriptor();
-    desc3.putUnitDouble(charIDToTypeID("Hrzn"), charIDToTypeID("#Pxl"), end[0]);
-    desc3.putUnitDouble(charIDToTypeID("Vrtc"), charIDToTypeID("#Pxl"), end[1]);
-    desc.putObject(idTo, charIDToTypeID("Pnt "), desc3);
-    var idstrokeWeight = stringIDToTypeID("strokeWidth");
-    desc.putUnitDouble(idstrokeWeight, charIDToTypeID("#Pxl"), strokeWeight);
-    var idstrokeColor = stringIDToTypeID("strokeColor");
-    var desc4 = new ActionDescriptor();
-    desc4.putDouble(charIDToTypeID("Rd  "), 0.0);
-    desc4.putDouble(charIDToTypeID("Grn "), 0.0);
-    desc4.putDouble(charIDToTypeID("Bl  "), 0.0);
-    desc.putObject(idstrokeColor, charIDToTypeID("RGBC"), desc4);
-    executeAction(idLine, desc, DialogModes.NO);
+function createLine(start, end, lineWeight, layer) {
+    var lineShape = layer.pathItems.add("Line", [start, end], mmToPx(lineWeight), "normal");
+    lineShape.strokeWidth = mmToPx(lineWeight);
+    lineShape.strokeColor = new SolidColor();
+    lineShape.strokeColor.rgb.red = 0;
+    lineShape.strokeColor.rgb.green = 0;
+    lineShape.strokeColor.rgb.blue = 0;
 }
 
 function createCross(x, y, layer, crossSize, crossLineWeight) {
+    // Размер крестика (половина размера одного сегмента в мм, переводим в пиксели)
     var crossSizePx = mmToPx(crossSize);
-    var strokeWeight = mmToPx(crossLineWeight);
+    var lineWeightPx = mmToPx(crossLineWeight);
 
-    // Горизонтальная линия
-    createLine([x - crossSizePx / 2, y], [x + crossSizePx / 2, y], strokeWeight, layer);
+    // Создаем горизонтальную линию крестика
+    createLine([x - crossSizePx, y], [x + crossSizePx, y], lineWeightPx, layer);
 
-    // Вертикальная линия
-    createLine([x, y - crossSizePx / 2], [x, y + crossSizePx / 2], strokeWeight, layer);
+    // Создаем вертикальную линию крестика
+    createLine([x, y - crossSizePx], [x, y + crossSizePx], lineWeightPx, layer);
 }
 
 function mmToPx(mm) {
-    return mm * 2.83465;
+    return mm * 2.83465; // Перевод миллиметров в пиксели (пункты)
 }
