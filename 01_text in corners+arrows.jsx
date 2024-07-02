@@ -77,6 +77,11 @@ sizeGroup.add('statictext', undefined, 'Введите размер шрифта
 var sizeInput = sizeGroup.add('edittext', undefined, '4.00'); // Примерный размер в мм
 sizeInput.characters = 5;
 
+var opacityGroup = dialog.add('group');
+opacityGroup.add('statictext', undefined, 'Введите прозрачность (в процентах, минимум 0%, максимум 100%):');
+var opacityInput = opacityGroup.add('edittext', undefined, '25'); // Примерная прозрачность в процентах
+opacityInput.characters = 3;
+
 var buttonGroup = dialog.add('group');
 var okButton = buttonGroup.add('button', undefined, 'OK');
 var cancelButton = buttonGroup.add('button', undefined, 'Отмена');
@@ -85,6 +90,7 @@ okButton.onClick = function() {
     var fontSizeMm = Math.max(parseFloat(sizeInput.text), 4.00); // Устанавливаем минимальный размер 4 мм
     var fontSizePt = fontSizeMm * 2.83465; // Конвертация мм в пункты
     var name = useFileNameCheckbox.value ? doc.name : nameInput.text; // Используем имя файла или введенное имя
+    var opacity = Math.max(0, Math.min(parseFloat(opacityInput.text), 100)); // Устанавливаем прозрачность от 0% до 100%
 
     // Установка активного артборда
     doc.artboards.setActiveArtboardIndex(artboardIndex);
@@ -95,16 +101,16 @@ okButton.onClick = function() {
 
     // Обрабатываем каждый выбранный чекбокс
     if (topLeftCheckbox.value) {
-        textItems.push(createTextAtCorner('topLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer));
+        textItems.push(createTextAtCorner('topLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer, opacity));
     }
     if (bottomLeftCheckbox.value) {
-        textItems.push(createTextAtCorner('bottomLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer));
+        textItems.push(createTextAtCorner('bottomLeft', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer, opacity));
     }
     if (topRightCheckbox.value) {
-        textItems.push(createTextAtCorner('topRight', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer));
+        textItems.push(createTextAtCorner('topRight', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer, opacity));
     }
     if (bottomRightCheckbox.value) {
-        textItems.push(createTextAtCorner('bottomRight', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer));
+        textItems.push(createTextAtCorner('bottomRight', fontSizePt, doc.artboards[artboardIndex].artboardRect, name, layer, opacity));
     }
 
     dialog.close();
@@ -117,7 +123,7 @@ cancelButton.onClick = function() {
 dialog.show();
 
 // Функция для создания и перемещения текста
-function createTextAtCorner(corner, fontSizePt, bounds, name, layer) {
+function createTextAtCorner(corner, fontSizePt, bounds, name, layer, opacity) {
     var text = doc.textFrames.add();
     text.textRange.characterAttributes.size = fontSizePt; // Установка размера шрифта
     text.textRange.characterAttributes.textFont = fontDropdown.selection.font; // Установка выбранного шрифта
@@ -145,7 +151,7 @@ function createTextAtCorner(corner, fontSizePt, bounds, name, layer) {
             break;
     }
     text.position = [text.left, text.top];
-    text.opacity = 60; // Устанавливаем прозрачность на 60%
+    text.opacity = opacity; // Устанавливаем прозрачность
     // Перемещаем текст на высоту самого текста вверх
     text.top += text.height;
 
