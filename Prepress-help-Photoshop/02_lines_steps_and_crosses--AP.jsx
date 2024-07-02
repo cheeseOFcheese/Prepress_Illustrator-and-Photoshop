@@ -103,7 +103,7 @@ dialog.show();
 
 function addLayoutLines(padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity) {
     var doc = app.activeDocument;
-    var abBounds = [0, 0, doc.width.value, doc.height.value]; // Assuming single document without artboards
+    var abBounds = [0, 0, doc.width.value, doc.height.value];
 
     // Создаем слои для линий и крестиков
     var linesLayer = doc.artLayers.add();
@@ -148,9 +148,8 @@ function addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPaddi
 }
 
 function createLine(start, end, strokeWeight, layer) {
-    var lineLayer = layer.artLayers.add();
     var linePath = doc.pathItems.add("Line", [start, end]);
-    linePath.strokePath();
+    linePath.stroked = true;
     linePath.strokeWidth = strokeWeight;
 
     var strokeColor = new SolidColor();
@@ -158,8 +157,6 @@ function createLine(start, end, strokeWeight, layer) {
     strokeColor.rgb.green = 128;
     strokeColor.rgb.blue = 128;
     linePath.strokeColor = strokeColor;
-
-    linePath.filled = false;
 }
 
 function createCross(x, y, layer, crossSize, crossLineWeight) {
