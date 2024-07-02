@@ -119,6 +119,7 @@ dialog.show();
 // Функция для создания и перемещения текста
 function createTextAtCorner(corner, fontSizePt, bounds, name, layer) {
     var text = doc.textFrames.add();
+    text.textRange.characterAttributes.size = fontSizePt; // Установка размера шрифта
     text.textRange.characterAttributes.textFont = fontDropdown.selection.font; // Установка выбранного шрифта
     var arrow = arrowCheckbox.value ? " ↑ " : "";
     switch (corner) {
@@ -144,6 +145,7 @@ function createTextAtCorner(corner, fontSizePt, bounds, name, layer) {
             break;
     }
     text.position = [text.left, text.top];
+    text.opacity = 60; // Устанавливаем прозрачность на 60%
     // Перемещаем текст на высоту самого текста вверх
     text.top += text.height;
 
