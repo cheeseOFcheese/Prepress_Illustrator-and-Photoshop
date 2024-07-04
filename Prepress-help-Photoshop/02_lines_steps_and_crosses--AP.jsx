@@ -92,7 +92,7 @@ function createCross(doc, width, height, thickness) {
     subPathArray.push(verticalSubPath);
 
     var crossPath = doc.pathItems.add("CrossPath", subPathArray);
-    crossPath.strokePath(ToolType.PENCIL, false);
+    crossPath.strokePath(ToolType.PENCIL);
     crossPath.remove();
     
     return crossLayer;
