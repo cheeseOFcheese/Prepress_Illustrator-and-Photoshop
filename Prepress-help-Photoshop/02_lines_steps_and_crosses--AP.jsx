@@ -87,7 +87,7 @@ function main() {
     for (var i = 0; i < positions.length; i++) {
         var pos = positions[i];
         var crossLayer = createCross(doc, crossWidth, crossHeight, crossThickness);
-        crossLayer.translate(pos[0] - crossWidth / 2, pos[1] - crossHeight / 2);
+        crossLayer.translate(UnitValue(pos[0] - crossWidth / 2, 'mm'), UnitValue(pos[1] - crossHeight / 2, 'mm'));
     }
 }
 
