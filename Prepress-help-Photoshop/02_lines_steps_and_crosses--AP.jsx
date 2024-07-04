@@ -47,52 +47,42 @@ function createUI() {
     }
 }
 
-// Функция для создания креста
+// Функция для создания креста с использованием прямоугольников
 function createCross(doc, width, height, thickness) {
     var crossLayer = doc.artLayers.add();
     crossLayer.name = "Cross";
 
-    var horizontalLine = [
-        [0, thickness / 2], [width, thickness / 2],
-        [width, -thickness / 2], [0, -thickness / 2]
-    ];
+    var widthPx = mmToPx(width);
+    var heightPx = mmToPx(height);
+    var thicknessPx = mmToPx(thickness);
 
-    var verticalLine = [
-        [thickness / 2, 0], [thickness / 2, height],
-        [-thickness / 2, height], [-thickness / 2, 0]
-    ];
+    // Горизонтальная линия
+    var horLine = doc.artLayers.add();
+    horLine.kind = LayerKind.NORMAL;
+    horLine.name = "Horizontal Line";
 
-    var horizontalPathPoints = horizontalLine.map(function(point) {
-        var pathPoint = new PathPointInfo();
-        pathPoint.kind = PointKind.CORNERPOINT;
-        pathPoint.anchor = point;
-        pathPoint.leftDirection = point;
-        pathPoint.rightDirection = point;
-        return pathPoint;
-    });
+    doc.selection.select([
+        [0, (heightPx - thicknessPx) / 2],
+        [widthPx, (heightPx - thicknessPx) / 2],
+        [widthPx, (heightPx + thicknessPx) / 2],
+        [0, (heightPx + thicknessPx) / 2]
+    ]);
+    doc.selection.fill(app.foregroundColor);
+    doc.selection.deselect();
 
-    var verticalPathPoints = verticalLine.map(function(point) {
-        var pathPoint = new PathPointInfo();
-        pathPoint.kind = PointKind.CORNERPOINT;
-        pathPoint.anchor = point;
-        pathPoint.leftDirection = point;
-        pathPoint.rightDirection = point;
-        return pathPoint;
-    });
+    // Вертикальная линия
+    var verLine = doc.artLayers.add();
+    verLine.kind = LayerKind.NORMAL;
+    verLine.name = "Vertical Line";
 
-    var horizontalSubPath = new SubPathInfo();
-    horizontalSubPath.closed = true;
-    horizontalSubPath.operation = ShapeOperation.SHAPEADD;
-    horizontalSubPath.entireSubPath = horizontalPathPoints;
-
-    var verticalSubPath = new SubPathInfo();
-    verticalSubPath.closed = true;
-    verticalSubPath.operation = ShapeOperation.SHAPEADD;
-    verticalSubPath.entireSubPath = verticalPathPoints;
-
-    var crossPath = doc.pathItems.add("CrossPath", [horizontalSubPath, verticalSubPath]);
-    crossPath.strokePath(ToolType.PENCIL, false);
-    crossPath.remove();
+    doc.selection.select([
+        [(widthPx - thicknessPx) / 2, 0],
+        [(widthPx + thicknessPx) / 2, 0],
+        [(widthPx + thicknessPx) / 2, heightPx],
+        [(widthPx - thicknessPx) / 2, heightPx]
+    ]);
+    doc.selection.fill(app.foregroundColor);
+    doc.selection.deselect();
 
     return crossLayer;
 }
@@ -110,19 +100,19 @@ function main() {
         return;
     }
     
-    var crossWidth = mmToPx(settings.width);
-    var crossHeight = mmToPx(settings.height);
-    var crossThickness = mmToPx(settings.thickness);
-    var offset = mmToPx(settings.offset);
+    var crossWidth = settings.width;
+    var crossHeight = settings.height;
+    var crossThickness = settings.thickness;
+    var offset = settings.offset;
     
     var docWidth = doc.width.as('px');
     var docHeight = doc.height.as('px');
     
     var positions = [
         [offset, offset],
-        [docWidth - offset - crossWidth, offset],
-        [offset, docHeight - offset - crossHeight],
-        [docWidth - offset - crossWidth, docHeight - offset - crossHeight]
+        [docWidth - offset - mmToPx(crossWidth), offset],
+        [offset, docHeight - offset - mmToPx(crossHeight)],
+        [docWidth - offset - mmToPx(crossWidth), docHeight - offset - mmToPx(crossHeight)]
     ];
     
     for (var i = 0; i < positions.length; i++) {
