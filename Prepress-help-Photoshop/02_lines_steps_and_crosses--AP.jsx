@@ -45,14 +45,56 @@ function createUI() {
 function createCross(doc, width, height, thickness) {
     var crossLayer = doc.artLayers.add();
     crossLayer.name = "Cross";
-    var crossPath = doc.pathItems.add("CrossPath", [
+
+    var lineArray = [];
+    var subPathArray = [];
+
+    // Горизонтальная линия
+    var horizontalLine = [
         [0, thickness / 2], [width, thickness / 2],
-        [width / 2, thickness / 2], [width / 2, height],
-        [width / 2, thickness / 2], [width / 2, 0],
-        [width, thickness / 2], [0, thickness / 2]
-    ]);
-    crossPath.strokePath(ToolType.PENCIL, thickness);
+        [width, -thickness / 2], [0, -thickness / 2]
+    ];
+
+    var horizontalPathPoints = horizontalLine.map(function(point) {
+        var pathPoint = new PathPointInfo();
+        pathPoint.kind = PointKind.CORNERPOINT;
+        pathPoint.anchor = point;
+        pathPoint.leftDirection = point;
+        pathPoint.rightDirection = point;
+        return pathPoint;
+    });
+
+    var horizontalSubPath = new SubPathInfo();
+    horizontalSubPath.closed = true;
+    horizontalSubPath.operation = ShapeOperation.SHAPEADD;
+    horizontalSubPath.entireSubPath = horizontalPathPoints;
+    subPathArray.push(horizontalSubPath);
+
+    // Вертикальная линия
+    var verticalLine = [
+        [thickness / 2, 0], [thickness / 2, height],
+        [-thickness / 2, height], [-thickness / 2, 0]
+    ];
+
+    var verticalPathPoints = verticalLine.map(function(point) {
+        var pathPoint = new PathPointInfo();
+        pathPoint.kind = PointKind.CORNERPOINT;
+        pathPoint.anchor = point;
+        pathPoint.leftDirection = point;
+        pathPoint.rightDirection = point;
+        return pathPoint;
+    });
+
+    var verticalSubPath = new SubPathInfo();
+    verticalSubPath.closed = true;
+    verticalSubPath.operation = ShapeOperation.SHAPEADD;
+    verticalSubPath.entireSubPath = verticalPathPoints;
+    subPathArray.push(verticalSubPath);
+
+    var crossPath = doc.pathItems.add("CrossPath", subPathArray);
+    crossPath.strokePath(ToolType.PENCIL, false);
     crossPath.remove();
+    
     return crossLayer;
 }
 
@@ -87,7 +129,7 @@ function main() {
     for (var i = 0; i < positions.length; i++) {
         var pos = positions[i];
         var crossLayer = createCross(doc, crossWidth, crossHeight, crossThickness);
-        crossLayer.translate(UnitValue(pos[0] - crossWidth / 2, 'mm'), UnitValue(pos[1] - crossHeight / 2, 'mm'));
+        crossLayer.translate(pos[0], pos[1]);
     }
 }
 
