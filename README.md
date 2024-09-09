@@ -36,7 +36,7 @@
 <div align="center">
     <img src="https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/1.png" alt="Demo PNG"/>
 </div>
-
+---
 ### 📏 [Ps02_lines_steps_and_crosses--AP.jsx](./Prepress-help-Photoshop/Ps02_lines_steps_and_crosses--AP.jsx)
 #### ➕ Скрипт добавляет линии, шаги и кресты для выравнивания и подготовки препресса в Photoshop. Полезен для создания визуальных направляющих и маркеров для макета печати.
 --- 
@@ -46,7 +46,7 @@
 <div align="center">
     <img src="https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/2.png" alt="Demo PNG"/>
 </div>
-
+---
 # 🎨 Скрипты для Illustrator
 
 ### 🖼️ [Ai01_text in corners+arrows.jsx](./Prepress-help_Illustrator/Ai01_text%20in%20corners%2Barrows.jsx)
