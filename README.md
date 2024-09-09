@@ -6,7 +6,7 @@
 # Скрипты для Photoshop
 
 ### Ps01_text in corners+arrows.jsx
-Этот скрипт добавляет текст в углы документа и создает стрелки, указывающие на определенные области. Полезен для маркировки зон дизайна, требующих внимания или пояснений.
+#### Этот скрипт добавляет текст в углы документа и создает стрелки, указывающие на определенные области. Полезен для маркировки зон дизайна, требующих внимания или пояснений.
 ---
 ![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/1.gif)
 ![Demo PNG](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/1.png)
