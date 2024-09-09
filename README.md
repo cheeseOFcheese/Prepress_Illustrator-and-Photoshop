@@ -13,6 +13,7 @@
 
 ### Ps02_lines_steps_and_crosses--AP.jsx
 Скрипт добавляет линии, шаги и кресты для выравнивания и подготовки препресса в Photoshop. Полезен для создания визуальных направляющих и маркеров для макета печати.
+
 ![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/2.gif)
 ![Demo PNG](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/2.png)
 
