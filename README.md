@@ -7,6 +7,7 @@
 
 ### Ps01_text in corners+arrows.jsx
 Этот скрипт добавляет текст в углы документа и создает стрелки, указывающие на определенные области. Полезен для маркировки зон дизайна, требующих внимания или пояснений.
+
 ![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/1.gif)
 ![Demo PNG](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/1.png)
 
@@ -19,11 +20,13 @@
 
 ### Ai01_text in corners+arrows.jsx
 Аналогично скрипту для Photoshop, этот скрипт для Adobe Illustrator добавляет текст в углы артборда и стрелки, указывающие на выбранные разделы. Это может быть использовано для аннотаций и анализа дизайна.
+
 ![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/3.gif)
 ![Demo PNG](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/3.png)
 
 ### Ai02_lines_steps_and_crosses.jsx
 Скрипт добавляет линии, шаги и кресты в дизайн в Illustrator, что полезно для создания препресс-меток для точного выравнивания и подготовки к печати.
+
 ![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/4.gif)
 ![Demo PNG](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/4.png)
 
