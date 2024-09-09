@@ -29,11 +29,8 @@
 ### Скрипт 1: `text in corners + arrows.jsx`
 
 Скрипт для настройки текста в углах артбордов. Вы можете выбрать шрифт, размер и позицию текста, а также добавить стрелки.  
-[Скачать скрипт](https://github.com/cheeseOFcheese/prepress_help/blob/main/text%20in%20corners%20%2B%20arrows.jsx)
-
-#### Пример работы:
-![images/demo.gif](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/blob/main/0001-0564-ezgif.com-video-to-gif-converter.gif)
-
+ ![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/blob/main/0001-0564-ezgif.com-video-to-gif-converter.gif?raw=true)
+ 
  https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/blob/main/0001-0564-ezgif.com-video-to-gif-converter.gif 
 
 ---
