@@ -41,7 +41,7 @@ TG:
 Вы можете выбрать шрифт, размер шрифта, позицию текста на артборде и использовать имя файла или ввести свое имя для текста. Дополнительно можно добавить стрелки к тексту.
 #### пример работы со скриптом text in corners + arrows.jsx:
 ##### заполняем поле (важно отмечать галочками что нуджно, если надписи надо чтобы отличались от имени файла, то снимаем галочку итд)
-![Prepress Help Image]([https://github.com/cheeseOFcheese/prepress_help/blob/main/image/se0.png](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/blob/main/0001-0564-ezgif.com-video-to-gif-converter.gif))
+ https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/blob/main/0001-0564-ezgif.com-video-to-gif-converter.gif 
 
 
 # <a id="title2">скрипт 2:lines_steps_and_crosses.jsx:</a> 
