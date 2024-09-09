@@ -1,54 +1,54 @@
-# Набор созданных мной скриптов для предпечатной подготовки
-это мой набор супер инструментов, полностью открытый и протестированный многими дизайнерами.
-В нём есть версия для Ai и для Ps.
 
-Лицензия на использования открытая. 
-Принимаю заказы на разработку скриптов для Ps, AI и CorkDraw. Могу также адаптировать скрипт под MAC-OS или иную систему.
-TG: 
-## оглавление
-####1 Установка и хранение скриптов для быстрого доступа 
-	##1-1 простая установка в 1 клик
-	##1-2 выборочная установка
-####2 Скрипты для фотошопа:
-	##2-1 разметка крестиками поля (для баннеров и плёнки)
-	##2-2 расстановка текстовых меток в углы поля
-	##2-3 массовое скоростное превью
-3 Скрипты для иллюстратора:
-	3-1 разметка крестиками поля (для баннеров и плёнки)
-	3-2 расстановка текстовых меток в углы поля
-	3-3 расстановка крестиков вдоль кривой
-4 Скрипты для CorlDraw
-	4-1
-	4-2
+# Набор скриптов для предпечатной подготовки в Adobe Illustrator и Photoshop
 
+Это мой набор скриптов, созданных для предпечатной подготовки. Они протестированы многими дизайнерами и предоставляются с открытым исходным кодом. В наборе есть версии для **Adobe Illustrator** и **Photoshop**.
 
-------------------------------------------------------------------
-# <a id="title0">Хранение скриптов для быстрого доступа:</a>
-> Вы можете хранить скрипты в папке скриптов по умолчанию в Illustrator для быстрого доступа.
-На Windows поместите скрипт в C:\Program Files\Adobe\Adobe Illustrator <версия>\Presets\Scripts.
-На macOS поместите скрипт в /Applications/Adobe Illustrator <версия>/Presets/Scripts.
-После размещения скрипта в папке по умолчанию он будет отображаться непосредственно в меню Файл > Скрипты для легкого доступа.
+**Лицензия**: Открытая для использования.  
+Я принимаю заказы на разработку скриптов для **Photoshop**, **Illustrator** и **CorelDraw**. Также могу адаптировать скрипты под **macOS** или другие системы.  
+Связаться со мной можно через Telegram: [ссылка на Telegram]
 
->чтобы скачать, перейти по ссылке "скачать" и нажать на эту кнопку 
-![Prepress Image2](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/2.png)  
+---
 
+## Оглавление
 
+1. **Установка и хранение скриптов для быстрого доступа**  
+   1.1. Простая установка в 1 клик  
+   1.2. Выборочная установка  
+2. **Скрипты для Photoshop**  
+   2.1. Разметка крестиками поля (для баннеров и плёнки)  
+   2.2. Расстановка текстовых меток в углы поля  
+   2.3. Массовое скоростное превью  
+3. **Скрипты для Illustrator**  
+   3.1. Разметка крестиками поля (для баннеров и плёнки)  
+   3.2. Расстановка текстовых меток в углы поля  
+   3.3. Расстановка крестиков вдоль кривой  
+4. **Скрипты для CorelDraw**  
+   4.1. …
 
-# <a id="title1">скрипт 1: text in corners + arrows.jsx:</a>  
+---
 
-> Скачать: [https://github.com/cheeseOFcheese/prepress_help/blob/main/text%20in%20corners%20%2B%20arrows.jsx ](https://github.com/cheeseOFcheese/Prepress-help_Illustrator-Photoshop/blob/main/01_text%20in%20corners%2Barrows.jsx) 
-> Этот скрипт позволяет настраивать параметры текста для артбордов в Adobe Illustrator.
-Вы можете выбрать шрифт, размер шрифта, позицию текста на артборде и использовать имя файла или ввести свое имя для текста. Дополнительно можно добавить стрелки к тексту.
-#### пример работы со скриптом text in corners + arrows.jsx:
-##### заполняем поле (важно отмечать галочками что нуджно, если надписи надо чтобы отличались от имени файла, то снимаем галочку итд)
- https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/blob/main/0001-0564-ezgif.com-video-to-gif-converter.gif 
+# Скрипты для Illustrator
 
+### Скрипт 1: `text in corners + arrows.jsx`
 
-# <a id="title2">скрипт 2:lines_steps_and_crosses.jsx:</a> 
-> Скачать:[ https://github.com/cheeseOFcheese/Prepress-help_Illustrator-Photoshop/blob/main/02_lines_steps_and_crosses.jsx](https://github.com/cheeseOFcheese/Prepress-help_Illustrator-Photoshop/blob/main/02_lines_steps_and_crosses.jsx) 
-> Этот скрипт для Adobe Illustrator автоматизирует процесс создания линий разметки и крестиков на выбранном артборде. 
-Пользователь может настроить отступы и выбрать добавление крестиков на пересечении линий.
-##### заполняем поле
-![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/s2-1.png)
-##### всё расставлено
-![Prepress Help Image](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/s2-2.png)
+Скрипт для настройки текста в углах артбордов. Вы можете выбрать шрифт, размер и позицию текста, а также добавить стрелки.  
+[Скачать скрипт](https://github.com/cheeseOFcheese/prepress_help/blob/main/text%20in%20corners%20%2B%20arrows.jsx)
+
+#### Пример работы:
+
+![Пример скрипта text in corners + arrows](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/blob/main/0001-0564-ezgif.com-video-to-gif-converter.gif)
+
+---
+
+### Скрипт 2: `lines_steps_and_crosses.jsx`
+
+Этот скрипт автоматизирует процесс создания линий разметки и крестиков на артборде.  
+[Скачать скрипт](https://github.com/cheeseOFcheese/Prepress-help_Illustrator-Photoshop/blob/main/02_lines_steps_and_crosses.jsx)
+
+#### Пример работы:
+
+![Пример скрипта lines_steps_and_crosses](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/s2-1.png)
+
+##### Всё расставлено:
+![Пример скрипта lines_steps_and_crosses](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/s2-2.png)
+
