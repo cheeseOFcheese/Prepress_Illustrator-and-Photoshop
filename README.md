@@ -26,10 +26,10 @@
 ---
 
 # 📜 Скрипты для Photoshop
-
+--- 
 ### 🖼️ [Ps01_text in corners+arrows.jsx](./Prepress-help-Photoshop/Ps01_text%20in%20corners%2Barrows.jsx)
 #### 🖊️ Этот скрипт добавляет текст в углы документа и создает стрелки, указывающие на определенные области. Полезен для маркировки зон дизайна, требующих внимания или пояснений.
----
+--- 
 <div align="center">
     <img src="https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/1.gif" alt="Demo GIF"/>
 </div>
@@ -39,7 +39,7 @@
 
 ### 📏 [Ps02_lines_steps_and_crosses--AP.jsx](./Prepress-help-Photoshop/Ps02_lines_steps_and_crosses--AP.jsx)
 #### ➕ Скрипт добавляет линии, шаги и кресты для выравнивания и подготовки препресса в Photoshop. Полезен для создания визуальных направляющих и маркеров для макета печати.
----
+--- 
 <div align="center">
     <img src="https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/2.gif" alt="Demo GIF"/>
 </div>
