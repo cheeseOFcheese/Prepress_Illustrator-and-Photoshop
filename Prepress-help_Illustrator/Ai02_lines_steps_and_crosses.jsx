@@ -109,6 +109,10 @@ opacitySlider.onChanging = function() {
 var crossCheckbox = dialog.add('checkbox', undefined, 'Добавить крестики на пересечении');
 crossCheckbox.value = true; // Включаем крестики по умолчанию
 
+// Галочка для включения/выключения линий
+var linesCheckbox = dialog.add('checkbox', undefined, 'Добавить линии');
+linesCheckbox.value = false; // Галочка по умолчанию отключена
+
 // Кнопки OK и Отмена
 var buttonGroup = dialog.add('group');
 var okButton = buttonGroup.add('button', undefined, 'OK');
@@ -123,11 +127,14 @@ okButton.onClick = function() {
     var leftPadding = parseFloat(leftPaddingInput.text) || 0;
     var rightPadding = parseFloat(rightPaddingInput.text) || 0;
     var addCross = crossCheckbox.value;
+    var addLines = linesCheckbox.value; // Проверка состояния галочки для линий
     var lineWeight = parseFloat(lineWeightInput.text) || 2; // Толщина линий, по умолчанию 2 мм
     var crossSize = parseFloat(crossSizeInput.text) || 10; // Размер крестиков, по умолчанию 10 мм
     var crossLineWeight = parseFloat(crossLineWeightInput.text) || 2; // Толщина линий крестиков, по умолчанию 2 мм
     var opacity = opacitySlider.value / 100; // Прозрачность в диапазоне от 0 до 1
-    addLayoutLines(selectedArtboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity);
+    if (addLines) {
+        addLayoutLines(selectedArtboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity);
+    }
     dialog.close();
 };
 
@@ -136,86 +143,3 @@ cancelButton.onClick = function() {
 };
 
 dialog.show();
-
-function addLayoutLines(artboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity) {
-    var doc = app.activeDocument;
-    doc.artboards.setActiveArtboardIndex(artboardIndex);
-    var ab = doc.artboards[artboardIndex];
-    var abBounds = ab.artboardRect; // [left, top, right, bottom]
-
-    // Создаем векторные линии
-    var linesLayer = doc.layers.add();
-    linesLayer.name = "LayoutLines";
-    var crossLayer = doc.layers.add();
-    crossLayer.name = "Crosses";
-
-    // Толщина линий в мм, переведенная в пиксели (1 мм = 2.83465 пикселя)
-    var strokeWeight = lineWeight * 2.83465;
-
-    if (customPadding) {
-        // Используем индивидуальные отступы
-        createLine([abBounds[0] + mmToPt(leftPadding), abBounds[1]], [abBounds[0] + mmToPt(leftPadding), abBounds[3]], strokeWeight, linesLayer, 'gray', opacity);
-        createLine([abBounds[2] - mmToPt(rightPadding), abBounds[1]], [abBounds[2] - mmToPt(rightPadding), abBounds[3]], strokeWeight, linesLayer, 'gray', opacity);
-        createLine([abBounds[0], abBounds[1] - mmToPt(topPadding)], [abBounds[2], abBounds[1] - mmToPt(topPadding)], strokeWeight, linesLayer, 'gray', opacity);
-        createLine([abBounds[0], abBounds[3] + mmToPt(bottomPadding)], [abBounds[2], abBounds[3] + mmToPt(bottomPadding)], strokeWeight, linesLayer, 'gray', opacity);
-
-        if (addCross) {
-            // Добавляем крестики на пересечениях
-            addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPadding, crossLayer, crossSize, crossLineWeight, opacity);
-        }
-    } else {
-        // Используем одинаковые отступы для всех сторон
-        createLine([abBounds[0] + mmToPt(padding), abBounds[1]], [abBounds[0] + mmToPt(padding), abBounds[3]], strokeWeight, linesLayer, 'gray', opacity);
-        createLine([abBounds[2] - mmToPt(padding), abBounds[1]], [abBounds[2] - mmToPt(padding), abBounds[3]], strokeWeight, linesLayer, 'gray', opacity);
-        createLine([abBounds[0], abBounds[1] - mmToPt(padding)], [abBounds[2], abBounds[1] - mmToPt(padding)], strokeWeight, linesLayer, 'gray', opacity);
-        createLine([abBounds[0], abBounds[3] + mmToPt(padding)], [abBounds[2], abBounds[3] + mmToPt(padding)], strokeWeight, linesLayer, 'gray', opacity);
-
-        if (addCross) {
-            // Добавляем крестики на пересечениях
-            addCrosses(abBounds, padding, padding, padding, padding, crossLayer, crossSize, crossLineWeight, opacity);
-        }
-    }
-}
-
-function addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPadding, layer, crossSize, crossLineWeight, opacity) {
-    createCross(abBounds[0] + mmToPt(leftPadding), abBounds[1] - mmToPt(topPadding), layer, crossSize, crossLineWeight, opacity);
-    createCross(abBounds[0] + mmToPt(leftPadding), abBounds[3] + mmToPt(bottomPadding), layer, crossSize, crossLineWeight, opacity);
-    createCross(abBounds[2] - mmToPt(rightPadding), abBounds[1] - mmToPt(topPadding), layer, crossSize, crossLineWeight, opacity);
-    createCross(abBounds[2] - mmToPt(rightPadding), abBounds[3] + mmToPt(bottomPadding), layer, crossSize, crossLineWeight, opacity);
-}
-
-function createLine(start, end, strokeWeight, layer, color, opacity) {
-    var pathItem = layer.pathItems.add();
-    pathItem.setEntirePath([start, end]);
-    pathItem.strokeWidth = strokeWeight;
-
-    var strokeColor = new RGBColor();
-    if (color === 'gray') {
-        strokeColor.red = 128;
-        strokeColor.green = 128;
-        strokeColor.blue = 128;
-    } else {
-        strokeColor.red = 0;
-        strokeColor.green = 0;
-        strokeColor.blue = 0;
-    }
-    pathItem.strokeColor = strokeColor;
-
-    pathItem.opacity = opacity * 100; // Установка прозрачности
-    pathItem.filled = false;
-}
-
-function createCross(x, y, layer, crossSize, crossLineWeight, opacity) {
-    // Размер крестика (половина размера одного сегмента в мм, переводим в пиксели)
-    var crossSizePt = crossSize * 2.83465;
-    var strokeWeight = crossLineWeight * 2.83465; // Толщина линии крестика в мм
-
-    // Создаем группу для крестика
-    var group = layer.groupItems.add();
-
-    // Создаем горизонтальную линию крестика
-    createLine([x - crossSizePt, y], [x + crossSizePt, y], strokeWeight, group, 'black', opacity);
-
-    // Создаем вертикальную линию крестика
-    createLine([x, y - crossSizePt], [x, y + crossSizePt], strokeWeight, group, 'black', opacity);
-}
