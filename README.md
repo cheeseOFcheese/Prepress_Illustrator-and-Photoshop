@@ -3,25 +3,25 @@
 
 Этот репозиторий содержит несколько скриптов на языке JavaScript для автоматизации задач препресса в Adobe Illustrator и Photoshop. Ниже представлено описание каждого скрипта и их функциональности.
 
-## Скрипты для Photoshop
+# Скрипты для Photoshop
 
 ### Ps01_text in corners+arrows.jsx
 Этот скрипт добавляет текст в углы документа и создает стрелки, указывающие на определенные области. Полезен для маркировки зон дизайна, требующих внимания или пояснений.
-
+---
 ![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/1.gif)
 ![Demo PNG](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/1.png)
 
 ### Ps02_lines_steps_and_crosses--AP.jsx
 Скрипт добавляет линии, шаги и кресты для выравнивания и подготовки препресса в Photoshop. Полезен для создания визуальных направляющих и маркеров для макета печати.
-
+---
 ![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/2.gif)
 ![Demo PNG](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/2.png)
 
-## Скрипты для Illustrator
+# Скрипты для Illustrator
 
 ### Ai01_text in corners+arrows.jsx
 Аналогично скрипту для Photoshop, этот скрипт для Adobe Illustrator добавляет текст в углы артборда и стрелки, указывающие на выбранные разделы. Это может быть использовано для аннотаций и анализа дизайна.
-
+---
 ![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/3.gif)
 ![Demo PNG](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/3.png)
 
@@ -33,7 +33,7 @@
 
 ### Ai03_cross _on_curve.jsx
 Этот скрипт Illustrator добавляет крест на выбранную кривую. Особенно полезен для проверки выравнивания и правильности кривизны в сложных дизайнах.
-
+---
 ## Изображения
 Папка `image` содержит GIF и PNG файлы, которые демонстрируют результаты работы скриптов. Эти изображения служат примерами того, что делает каждый скрипт.
 
