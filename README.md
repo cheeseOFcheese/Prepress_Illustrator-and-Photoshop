@@ -1,50 +1,42 @@
 
-# Набор скриптов для предпечатной подготовки в Adobe Illustrator и Photoshop
+# Скрипты для Prepress в Illustrator и Photoshop
 
-Это мой набор скриптов, созданных для предпечатной подготовки. Они протестированы многими дизайнерами и предоставляются с открытым исходным кодом. В наборе есть версии для **Adobe Illustrator** и **Photoshop**.
+Этот репозиторий содержит несколько скриптов на языке JavaScript для автоматизации задач препресса в Adobe Illustrator и Photoshop. Ниже представлено описание каждого скрипта и их функциональности.
 
-**Лицензия**: Открытая для использования.  
-Я принимаю заказы на разработку скриптов для **Photoshop**, **Illustrator** и **CorelDraw**. Также могу адаптировать скрипты под **macOS** или другие системы.  
-Связаться со мной можно через Telegram: [ссылка на Telegram]
+## Скрипты для Photoshop
 
----
+### Ps01_text in corners+arrows.jsx
+Этот скрипт добавляет текст в углы документа и создает стрелки, указывающие на определенные области. Полезен для маркировки зон дизайна, требующих внимания или пояснений.
+![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/1.gif)
 
-## Оглавление
+### Ps02_lines_steps_and_crosses--AP.jsx
+Скрипт добавляет линии, шаги и кресты для выравнивания и подготовки препресса в Photoshop. Полезен для создания визуальных направляющих и маркеров для макета печати.
+![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/2.gif)
 
-1. **Установка и хранение скриптов для быстрого доступа**  
-   1.1. Простая установка в 1 клик  
-   1.2. Выборочная установка  
-2. **Скрипты для Photoshop**  
-   2.1. Разметка крестиками поля (для баннеров и плёнки)  
-   2.2. Расстановка текстовых меток в углы поля  
-   2.3. Массовое скоростное превью  
-3. **Скрипты для Illustrator**  
-   3.1. Разметка крестиками поля (для баннеров и плёнки)  
-   3.2. Расстановка текстовых меток в углы поля   
+## Скрипты для Illustrator
 
----
+### Ai01_text in corners+arrows.jsx
+Аналогично скрипту для Photoshop, этот скрипт для Adobe Illustrator добавляет текст в углы артборда и стрелки, указывающие на выбранные разделы. Это может быть использовано для аннотаций и анализа дизайна.
+![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/3.gif)
 
-# Скрипты для Illustrator
+### Ai02_lines_steps_and_crosses.jsx
+Скрипт добавляет линии, шаги и кресты в дизайн в Illustrator, что полезно для создания препресс-меток для точного выравнивания и подготовки к печати.
+![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/4.gif)
 
-### Скрипт 1: `text in corners + arrows.jsx`
+### Ai03_cross _on_curve.jsx
+Этот скрипт Illustrator добавляет крест на выбранную кривую. Особенно полезен для проверки выравнивания и правильности кривизны в сложных дизайнах.
 
-Скрипт для настройки текста в углах артбордов. Вы можете выбрать шрифт, размер и позицию текста, а также добавить стрелки.  
- ![Demo GIF](https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/raw/main/image/1.gif)
-
- 
- https://github.com/cheeseOFcheese/Prepress_Illustrator-and-Photoshop/blob/main/0001-0564-ezgif.com-video-to-gif-converter.gif 
+## Изображения
+Папка `image` содержит GIF и PNG файлы, которые демонстрируют результаты работы скриптов. Эти изображения служат примерами того, что делает каждый скрипт.
 
 ---
 
-### Скрипт 2: `lines_steps_and_crosses.jsx`
+### Установка и использование
+1. Скачайте скрипты и поместите их в папку со скриптами для Adobe Photoshop или Illustrator.
+2. Запустите скрипты через меню `Файл > Скрипты` в соответствующих приложениях.
+3. Следуйте инструкциям на экране, если это необходимо.
 
-Этот скрипт автоматизирует процесс создания линий разметки и крестиков на артборде.  
-[Скачать скрипт](https://github.com/cheeseOFcheese/Prepress-help_Illustrator-Photoshop/blob/main/02_lines_steps_and_crosses.jsx)
+---
 
-#### Пример работы:
-
-![Пример скрипта lines_steps_and_crosses](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/s2-1.png)
-
-##### Всё расставлено:
-![Пример скрипта lines_steps_and_crosses](https://github.com/cheeseOFcheese/prepress_help/blob/main/image/s2-2.png)
+Будем рады вашим предложениям по улучшению или добавлению новых скриптов. Приветствуются pull request'ы!
 
