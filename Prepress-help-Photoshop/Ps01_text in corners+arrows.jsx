@@ -26,7 +26,7 @@ function placeTextInCorners(settings, offset) {
         textLayer.textItem.size = new UnitValue(settings.fontSize, "mm"); // размер текста в мм
         textLayer.textItem.justification = justification;
 
-        // Установка шрифта Impact
+        // Установка шрифта Impact 
         textLayer.textItem.font = "Impact"; // Для обычного Impact используем "Impact"
 
         // Устанавливаем позицию текста
