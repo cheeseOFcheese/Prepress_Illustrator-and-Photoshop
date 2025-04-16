@@ -1,34 +1,9 @@
 var doc = app.activeDocument;
 
-// Функция для перевода пикселей в миллиметры
-function ptToMm(pt) {
-    return pt / 2.83465;
-}
-
-// Функция для перевода миллиметров в пиксели
-function mmToPt(mm) {
-    return mm * 2.83465; // Перевод миллиметров в пиксели (пункты)
-}
-
 // Окно для настройки параметров
 var dialog = new Window('dialog', 'Настройка линий и крестиков');
 dialog.orientation = 'column';
 dialog.alignChildren = 'left';
-
-// Показ размера артборда в мм
-var artboardSizeGroup = dialog.add('group');
-artboardSizeGroup.add('statictext', undefined, 'Размер артборда (мм):');
-var ab = doc.artboards[doc.artboards.getActiveArtboardIndex()];
-var abBounds = ab.artboardRect; // [left, top, right, bottom]
-var abWidth = Math.abs(ptToMm(abBounds[2] - abBounds[0])).toFixed(0); // Ширина артборда
-var abHeight = Math.abs(ptToMm(abBounds[1] - abBounds[3])).toFixed(0); // Высота артборда
-artboardSizeGroup.add('statictext', undefined, abWidth + ' мм x ' + abHeight + ' мм');
-
-// Показ цветового пространства документа
-var colorSpaceGroup = dialog.add('group');
-colorSpaceGroup.add('statictext', undefined, 'Цветовое пространство документа:');
-var colorSpace = doc.documentColorSpace; // Возвращает 'RGB' или 'CMYK'
-colorSpaceGroup.add('statictext', undefined, colorSpace);
 
 // Выбор артборда
 var artboardGroup = dialog.add('group');
@@ -42,10 +17,22 @@ artboardDropdown.selection = 0; // По умолчанию выбираем пе
 // Ввод отступов
 var paddingGroup = dialog.add('group');
 paddingGroup.add('statictext', undefined, 'Введите отступы (в мм):');
-var paddingInput = paddingGroup.add('edittext', undefined, '150');
+var paddingInput = paddingGroup.add('edittext', undefined, '100');
 paddingInput.characters = 5;
 
+
+// Прозрачность крестиков
+var transparencyGroup = dialog.add('group');
+transparencyGroup.add('statictext', undefined, 'Прозрачность крестиков (%):');
+var transparencySlider = transparencyGroup.add('slider', undefined, 50, 0, 100); // от 0 до 100 процентов
+transparencySlider.value = 50; // Дефолтное значение 50%
+
+transparencySlider.onChanging = function() {
+    crossOpacity = transparencySlider.value / 100; // Преобразуем значение в процент (0-1)
+};
+
 // Индивидуальный отступ
+
 var customPaddingCheckbox = dialog.add('checkbox', undefined, 'Индивидуальный отступ');
 
 var customPaddingGroup = dialog.add('group');
@@ -55,22 +42,22 @@ customPaddingGroup.enabled = false;
 
 var topPaddingGroup = customPaddingGroup.add('group');
 topPaddingGroup.add('statictext', undefined, 'Верхний отступ:');
-var topPaddingInput = topPaddingGroup.add('edittext', undefined, '150');
+var topPaddingInput = topPaddingGroup.add('edittext', undefined, '100');
 topPaddingInput.characters = 5;
 
 var bottomPaddingGroup = customPaddingGroup.add('group');
 bottomPaddingGroup.add('statictext', undefined, 'Нижний отступ:');
-var bottomPaddingInput = bottomPaddingGroup.add('edittext', undefined, '150');
+var bottomPaddingInput = bottomPaddingGroup.add('edittext', undefined, '100');
 bottomPaddingInput.characters = 5;
 
 var leftPaddingGroup = customPaddingGroup.add('group');
 leftPaddingGroup.add('statictext', undefined, 'Левый отступ:');
-var leftPaddingInput = leftPaddingGroup.add('edittext', undefined, '150');
+var leftPaddingInput = leftPaddingGroup.add('edittext', undefined, '100');
 leftPaddingInput.characters = 5;
 
 var rightPaddingGroup = customPaddingGroup.add('group');
 rightPaddingGroup.add('statictext', undefined, 'Правый отступ:');
-var rightPaddingInput = rightPaddingGroup.add('edittext', undefined, '150');
+var rightPaddingInput = rightPaddingGroup.add('edittext', undefined, '100');
 rightPaddingInput.characters = 5;
 
 customPaddingCheckbox.onClick = function() {
@@ -78,40 +65,27 @@ customPaddingCheckbox.onClick = function() {
     paddingGroup.enabled = !this.value;
 };
 
-// Настройка толщины линии (по умолчанию 2 мм)
+// Настройка толщины линии
 var lineWeightGroup = dialog.add('group');
 lineWeightGroup.add('statictext', undefined, 'Толщина линии (в мм):');
-var lineWeightInput = lineWeightGroup.add('edittext', undefined, '2'); // Значение по умолчанию 2 мм
+var lineWeightInput = lineWeightGroup.add('edittext', undefined, '2');
 lineWeightInput.characters = 5;
 
-// Настройка размера крестиков (по умолчанию 10 мм)
+// Настройка размера крестиков
 var crossSizeGroup = dialog.add('group');
 crossSizeGroup.add('statictext', undefined, 'Размер крестиков (в мм):');
-var crossSizeInput = crossSizeGroup.add('edittext', undefined, '10'); // Значение по умолчанию 10 мм
+var crossSizeInput = crossSizeGroup.add('edittext', undefined, '10');
 crossSizeInput.characters = 5;
 
-// Настройка толщины линий крестиков (по умолчанию 2 мм)
+// Настройка толщины линий крестиков
 var crossLineWeightGroup = dialog.add('group');
 crossLineWeightGroup.add('statictext', undefined, 'Толщина линий крестиков (в мм):');
-var crossLineWeightInput = crossLineWeightGroup.add('edittext', undefined, '2'); // Значение по умолчанию 2 мм
+var crossLineWeightInput = crossLineWeightGroup.add('edittext', undefined, '2');
 crossLineWeightInput.characters = 5;
-
-// Настройка прозрачности линий и крестиков (по умолчанию 50%)
-var opacityGroup = dialog.add('group');
-opacityGroup.add('statictext', undefined, 'Прозрачность (в %):');
-var opacitySlider = opacityGroup.add('slider', undefined, 50, 0, 100); // По умолчанию 50% прозрачности
-var opacityValue = opacityGroup.add('statictext', undefined, '50%');
-opacitySlider.onChanging = function() {
-    opacityValue.text = Math.round(opacitySlider.value) + '%';
-};
 
 // Добавление крестиков на пересечении
 var crossCheckbox = dialog.add('checkbox', undefined, 'Добавить крестики на пересечении');
 crossCheckbox.value = true; // Включаем крестики по умолчанию
-
-// Галочка для включения/выключения линий
-var linesCheckbox = dialog.add('checkbox', undefined, 'Добавить линии');
-linesCheckbox.value = false; // Галочка по умолчанию отключена
 
 // Кнопки OK и Отмена
 var buttonGroup = dialog.add('group');
@@ -127,14 +101,10 @@ okButton.onClick = function() {
     var leftPadding = parseFloat(leftPaddingInput.text) || 0;
     var rightPadding = parseFloat(rightPaddingInput.text) || 0;
     var addCross = crossCheckbox.value;
-    var addLines = linesCheckbox.value; // Проверка состояния галочки для линий
-    var lineWeight = parseFloat(lineWeightInput.text) || 2; // Толщина линий, по умолчанию 2 мм
-    var crossSize = parseFloat(crossSizeInput.text) || 10; // Размер крестиков, по умолчанию 10 мм
-    var crossLineWeight = parseFloat(crossLineWeightInput.text) || 2; // Толщина линий крестиков, по умолчанию 2 мм
-    var opacity = opacitySlider.value / 100; // Прозрачность в диапазоне от 0 до 1
-    if (addLines) {
-        addLayoutLines(selectedArtboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight, opacity);
-    }
+    var lineWeight = parseFloat(lineWeightInput.text) || 2;
+    var crossSize = parseFloat(crossSizeInput.text) || 10;
+    var crossLineWeight = parseFloat(crossLineWeightInput.text) || 2;
+    addLayoutLines(selectedArtboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight);
     dialog.close();
 };
 
@@ -143,3 +113,89 @@ cancelButton.onClick = function() {
 };
 
 dialog.show();
+
+function addLayoutLines(artboardIndex, padding, customPadding, topPadding, bottomPadding, leftPadding, rightPadding, addCross, lineWeight, crossSize, crossLineWeight) {
+    var doc = app.activeDocument;
+    doc.artboards.setActiveArtboardIndex(artboardIndex);
+    var ab = doc.artboards[artboardIndex];
+    var abBounds = ab.artboardRect; // [left, top, right, bottom]
+
+    // Создаем векторные линии
+    var linesLayer = doc.layers.add();
+    linesLayer.name = "LayoutLines";
+    var crossLayer = doc.layers.add();
+    crossLayer.name = "Crosses";
+
+    // Толщина линий в мм, переведенная в пиксели (1 мм = 2.83465 пикселя)
+    var strokeWeight = lineWeight * 2.83465;
+
+    if (customPadding) {
+        // Используем индивидуальные отступы
+        createLine([abBounds[0] + mmToPt(leftPadding), abBounds[1]], [abBounds[0] + mmToPt(leftPadding), abBounds[3]], strokeWeight, linesLayer, 'gray');
+        createLine([abBounds[2] - mmToPt(rightPadding), abBounds[1]], [abBounds[2] - mmToPt(rightPadding), abBounds[3]], strokeWeight, linesLayer, 'gray');
+        createLine([abBounds[0], abBounds[1] - mmToPt(topPadding)], [abBounds[2], abBounds[1] - mmToPt(topPadding)], strokeWeight, linesLayer, 'gray');
+        createLine([abBounds[0], abBounds[3] + mmToPt(bottomPadding)], [abBounds[2], abBounds[3] + mmToPt(bottomPadding)], strokeWeight, linesLayer, 'gray');
+
+        if (addCross) {
+            // Добавляем крестики на пересечениях
+            addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPadding, crossLayer, crossSize, crossLineWeight);
+        }
+    } else {
+        // Используем одинаковые отступы для всех сторон
+        createLine([abBounds[0] + mmToPt(padding), abBounds[1]], [abBounds[0] + mmToPt(padding), abBounds[3]], strokeWeight, linesLayer, 'gray');
+        createLine([abBounds[2] - mmToPt(padding), abBounds[1]], [abBounds[2] - mmToPt(padding), abBounds[3]], strokeWeight, linesLayer, 'gray');
+        createLine([abBounds[0], abBounds[1] - mmToPt(padding)], [abBounds[2], abBounds[1] - mmToPt(padding)], strokeWeight, linesLayer, 'gray');
+        createLine([abBounds[0], abBounds[3] + mmToPt(padding)], [abBounds[2], abBounds[3] + mmToPt(padding)], strokeWeight, linesLayer, 'gray');
+
+        if (addCross) {
+            // Добавляем крестики на пересечениях
+            addCrosses(abBounds, padding, padding, padding, padding, crossLayer, crossSize, crossLineWeight);
+        }
+    }
+}
+
+function addCrosses(abBounds, leftPadding, topPadding, rightPadding, bottomPadding, layer, crossSize, crossLineWeight) {
+    createCross(abBounds[0] + mmToPt(leftPadding), abBounds[1] - mmToPt(topPadding), layer, crossSize, crossLineWeight);
+    createCross(abBounds[0] + mmToPt(leftPadding), abBounds[3] + mmToPt(bottomPadding), layer, crossSize, crossLineWeight);
+    createCross(abBounds[2] - mmToPt(rightPadding), abBounds[1] - mmToPt(topPadding), layer, crossSize, crossLineWeight);
+    createCross(abBounds[2] - mmToPt(rightPadding), abBounds[3] + mmToPt(bottomPadding), layer, crossSize, crossLineWeight);
+}
+
+function createLine(start, end, strokeWeight, layer, color) {
+    var pathItem = layer.pathItems.add();
+    pathItem.setEntirePath([start, end]);
+    pathItem.strokeWidth = strokeWeight;
+
+    var strokeColor = new RGBColor();
+    if (color === 'gray') {
+        strokeColor.red = 128;
+        strokeColor.green = 128;
+        strokeColor.blue = 128;
+    } else {
+        strokeColor.red = 0;
+        strokeColor.green = 0;
+        strokeColor.blue = 0;
+    }
+    pathItem.strokeColor = strokeColor;
+
+    pathItem.filled = false;
+}
+
+function createCross(x, y, layer, crossSize, crossLineWeight) {
+    // Размер крестика (половина размера одного сегмента в мм, переводим в пиксели)
+    var crossSizePt = crossSize * 2.83465;
+    var strokeWeight = crossLineWeight * 2.83465; // Толщина линии крестика в мм
+
+    // Создаем группу для крестика
+    var group = layer.groupItems.add();
+
+    // Создаем горизонтальную линию крестика
+    createLine([x - crossSizePt, y], [x + crossSizePt, y], strokeWeight, group, 'black');
+
+    // Создаем вертикальную линию крестика
+    createLine([x, y - crossSizePt], [x, y + crossSizePt], strokeWeight, group, 'black');
+}
+
+function mmToPt(mm) {
+    return mm * 2.83465; // Перевод миллиметров в пиксели (пункты)
+}
