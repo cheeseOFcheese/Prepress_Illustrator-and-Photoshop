@@ -1,0 +1,12 @@
+# .gitattributes — в корне проекта
+
+# Исключить из ZIP-архива демонстрационные GIF и PNG из папки image
+image/1.gif export-ignore
+image/1.png export-ignore
+image/2.gif export-ignore
+image/2.png export-ignore
+image/3.gif export-ignore
+image/3.png export-ignore
+image/4.gif export-ignore
+image/4.png export-ignore
+ 
